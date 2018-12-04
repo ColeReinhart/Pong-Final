@@ -112,3 +112,8 @@
         y += positionY;
     };
      setInterval(draw, 25);
+
+
+     module.exports ={
+      drawPong,
+     };
