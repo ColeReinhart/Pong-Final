@@ -41,6 +41,8 @@ let paddleX = 15;
 let paddleY = 100;
 let paddleDown = false;
 let paddleUp = false;
+let paddleC = (canvas.height-paddleHeight)/2;
+let rPaddleC = (canvas.height-paddleHeight)/2;
 let rPaddleWidth = 10;
 let rPaddleHeight = 75;
 let rPaddleX = 784;
@@ -95,21 +97,15 @@ const drawPong = () => {
   ctx.closePath();
 };
 
-const collision = () => {
-
-
-
-}
-
 const leftPaddle = () => { //create's paddle on left side of screen
   ctx.save();
   ctx.translate(paddleX, paddleY);
   ctx.fillRect(-5, 50, paddleWidth, paddleHeight);
   ctx.restore();
-  if (paddleUp) {
+  if (paddleUp && paddleY > canvas.height-(paddleHeight)*6) {
     paddleY = paddleY - 10;
   }
-  if (paddleDown) {
+  if (paddleDown && paddleY < canvas.height-(paddleHeight)*1.6) {
     paddleY = paddleY + 10;
   }
 };
@@ -119,10 +115,10 @@ const rightPaddle = () => {
   ctx.translate(rPaddleX, rPaddleY);
   ctx.fillRect(-5, 50, rPaddleWidth, rPaddleHeight);
   ctx.restore();
-  if (rPaddleUp) {
+  if (rPaddleUp && rPaddleY > canvas.height-(rPaddleHeight)*6) {
     rPaddleY = rPaddleY - 10;
   }
-  if (rPaddleDown) {
+  if (rPaddleDown && rPaddleY < canvas.height-(rPaddleHeight)*1.6) {
     rPaddleY = rPaddleY + 10;
   }
 };
@@ -132,24 +128,30 @@ const draw = () => {
   leftPaddle();
   rightPaddle();
   drawPong();
-  collision();
   drawLine();
 
 
-  if (x + positionX > canvas.width - ballSize || x + positionX < ballSize) { //left and right
+  if (y + positionY < ballSize) { //top wall
+    positionY = -positionY;
+
+  }
+
+  if (y + positionY > canvas.height - ballSize) { //bottom wall
+    positionY = -positionY;
+  }
+
+  else if (x + positionX < canvas.width - ballSize){ //right wall
+    if (y > rPaddleC && y < rPaddleC + rPaddleWidth) {
+        positionX = -positionX;
+    } else {
+        //alert("Game Over");
+    }
+  }
+
+  if(x + positionX < ballSize) { //left wall
     positionX = -positionX;
-  }
-
-  if (y + positionY < ballSize) { //top
-    positionY = -positionY;
-
-  }
-  
-  if (y + positionY > canvas.height - ballSize) { //bottom
-    positionY = -positionY;
   }
   x += positionX;
   y += positionY;
 };
 setInterval(draw, 25);
-
