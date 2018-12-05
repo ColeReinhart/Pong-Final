@@ -51,7 +51,8 @@ let lineWidth = 2;
 let lineHeight = 400;
 ctx.canvas.setAttribute('tabindex', '0'); //click on window to activate keypress
 ctx.canvas.focus(); //auto loads tabindex, no click needed
-
+let score1 = 0;
+let score2 = 0;
 ctx.canvas.onkeydown = function(evt) { //keybindings to move paddle while key is pressed
   if (event.keyCode == 87) {
     paddleUp = true;
@@ -134,7 +135,7 @@ const draw = () => {
   drawPong();
   collision();
   drawLine();
-
+  
 
   if (x + positionX > canvas.width - ballSize || x + positionX < ballSize) { //left and right
     positionX = -positionX;
@@ -151,5 +152,22 @@ const draw = () => {
   x += positionX;
   y += positionY;
 };
+
+
+const createScorePOne = () =>{
+  let newDiv = document.createElement("div");
+  let newContent = document.createTextNode(score1);
+  newDiv.appendChild(newContent);  
+  let currentDiv = document.getElementById("div1"); 
+  document.body.insertBefore(newDiv, currentDiv); 
+}
+
+const createScorePTwo = () =>{
+  let newDiv = document.createElement("div");
+  let newContent = document.createTextNode(score2);
+  newDiv.appendChild(newContent);  
+  let currentDiv = document.getElementById("div2"); 
+  document.body.insertBefore(newDiv, currentDiv); 
+}
 setInterval(draw, 25);
 
