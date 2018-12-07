@@ -136,9 +136,18 @@ const draw = () => {
   collision();
   drawLine();
   
-
-  if (x + positionX > canvas.width - ballSize || x + positionX < ballSize) { //left and right
+let child = document.getElementById("two")
+  if (x + positionX > canvas.width - ballSize){//right
     positionX = -positionX;
+    score2++;
+    createScorePTwo();
+  } 
+
+
+  if(x + positionX < ballSize) { //left
+    positionX = -positionX;
+    score1++;
+    createScorePOne();
   }
 
   if (y + positionY < ballSize) { //top
@@ -155,19 +164,21 @@ const draw = () => {
 
 
 const createScorePOne = () =>{
-  let newDiv = document.createElement("div");
-  let newContent = document.createTextNode(score1);
-  newDiv.appendChild(newContent);  
-  let currentDiv = document.getElementById("div1"); 
-  document.body.insertBefore(newDiv, currentDiv); 
+  const div = document.querySelector("#div2");
+  const newContent = document.createTextNode(score1);
+  div.innerHTML = "";
+  div.appendChild(newContent);
 }
 
+
 const createScorePTwo = () =>{
-  let newDiv = document.createElement("div");
-  let newContent = document.createTextNode(score2);
-  newDiv.appendChild(newContent);  
-  let currentDiv = document.getElementById("div2"); 
-  document.body.insertBefore(newDiv, currentDiv); 
+  const div = document.querySelector("#div1");
+  const newContent = document.createTextNode(score2);
+  div.innerHTML = "";
+  div.appendChild(newContent);
 }
 setInterval(draw, 25);
 
+// module.exports = {
+//   draw,
+// }
