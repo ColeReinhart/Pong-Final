@@ -1,4 +1,3 @@
-
 // CREATE A BOARD/PLAYING AREA
 // MAKE A POINT SYSTEM
 // HAVE A WAY FOR PLAYERS TO MOVE THEIR OBJECT
@@ -30,9 +29,10 @@
     */
 let canvas = document.getElementById("myCanvas")
 let ctx = canvas.getContext("2d");
-let x = canvas.width / 2;
-let y = canvas.height - 30;
-let positionY = 9;
+let x = canvas.width / 2; //starts ball in center of screen
+let y = canvas.height - 200;
+let rX = canvas.height / 2;
+let positionY = 2;
 let positionX = 5;
 let ballSize = 10;
 let paddleWidth = 10;
@@ -41,16 +41,16 @@ let paddleX = 15;
 let paddleY = 100;
 let paddleDown = false;
 let paddleUp = false;
-let paddleC = (canvas.height-paddleHeight)/2;
-let rPaddleC = (canvas.height-paddleHeight)/2;
 let rPaddleWidth = 10;
 let rPaddleHeight = 75;
-let rPaddleX = 784;
-let rPaddleY = 100;
+let rPaddleX = 785;
+let rPaddleY = 150;
 let rPaddleUp = false;
 let rPaddleDown = false;
 let lineWidth = 2;
 let lineHeight = 400;
+let paddleC = (canvas.height - paddleHeight) / 2;
+let rPaddleC = (canvas.height - rPaddleHeight) / 2;
 ctx.canvas.setAttribute('tabindex', '0'); //click on window to activate keypress
 ctx.canvas.focus(); //auto loads tabindex, no click needed
 
@@ -100,26 +100,26 @@ const drawPong = () => {
 const leftPaddle = () => { //create's paddle on left side of screen
   ctx.save();
   ctx.translate(paddleX, paddleY);
-  ctx.fillRect(-5, 50, paddleWidth, paddleHeight);
+  ctx.fillRect(-5, 0, paddleWidth, paddleHeight);
   ctx.restore();
-  if (paddleUp && paddleY > canvas.height-(paddleHeight)*6) {
-    paddleY = paddleY - 10;
+  if (paddleUp && paddleY > canvas.height - (paddleHeight) * 6 + 50) {
+    paddleY = paddleY - 5;
   }
-  if (paddleDown && paddleY < canvas.height-(paddleHeight)*1.6) {
-    paddleY = paddleY + 10;
+  if (paddleDown && paddleY < canvas.height - paddleHeight) {
+    paddleY = paddleY + 5;
   }
 };
 
 const rightPaddle = () => {
   ctx.save();
   ctx.translate(rPaddleX, rPaddleY);
-  ctx.fillRect(-5, 50, rPaddleWidth, rPaddleHeight);
+  ctx.fillRect(-5, 0, rPaddleWidth, rPaddleHeight);
   ctx.restore();
-  if (rPaddleUp && rPaddleY > canvas.height-(rPaddleHeight)*6) {
-    rPaddleY = rPaddleY - 10;
+  if (rPaddleUp && rPaddleY > canvas.height - (rPaddleHeight) * 6 + 50) {
+    rPaddleY = rPaddleY - 5;
   }
-  if (rPaddleDown && rPaddleY < canvas.height-(rPaddleHeight)*1.6) {
-    rPaddleY = rPaddleY + 10;
+  if (rPaddleDown && rPaddleY < canvas.height - rPaddleHeight) {
+    rPaddleY = rPaddleY + 5;
   }
 };
 
@@ -131,6 +131,7 @@ const draw = () => {
   drawLine();
 
 
+
   if (y + positionY < ballSize) { //top wall
     positionY = -positionY;
 
@@ -140,17 +141,23 @@ const draw = () => {
     positionY = -positionY;
   }
 
-  else if (x + positionX < canvas.width - ballSize){ //right wall
-    if (y > rPaddleC && y < rPaddleC + rPaddleWidth) {
-        positionX = -positionX;
-    } else {
-        //alert("Game Over");
-    }
-  }
+  else if (x + positionX < 25) { // left wall
+    if (400-y < canvas.height - paddleY && 400-y > (canvas.height - paddleY)-paddleHeight) { // positionY < rPaddleY
+       positionX = -positionX;
+    }else if (x + positionX <  - 30)
+    alert("end game")
+}
 
-  if(x + positionX < ballSize) { //left wall
+  else if (x + positionX > 775) { //right wall
+    if (400-y < canvas.height-rPaddleY && 400-y > (canvas.height -rPaddleY)-paddleHeight) { // positionY < rPaddleY
+       positionX = -positionX;
+    }else if (x + positionX > canvas.width + 30)
+    alert("end game")
+}
+
+  /*if (x + positionX < ballSize) { //left wall
     positionX = -positionX;
-  }
+  }*/
   x += positionX;
   y += positionY;
 };
