@@ -141,6 +141,9 @@ let child = document.getElementById("two")
     positionX = -positionX;
     score2++;
     createScorePTwo();
+    if(score2 === 10){
+      alert("Left wins!")
+    };
   } 
 
 
@@ -148,6 +151,9 @@ let child = document.getElementById("two")
     positionX = -positionX;
     score1++;
     createScorePOne();
+    if(score1 === 10){
+      alert("Right wins!")
+    };
   }
 
   if (y + positionY < ballSize) { //top
@@ -158,13 +164,15 @@ let child = document.getElementById("two")
   if (y + positionY > canvas.height - ballSize) { //bottom
     positionY = -positionY;
   }
+
+ 
   x += positionX;
   y += positionY;
 };
 
 
 const createScorePOne = () =>{
-  const div = document.querySelector("#div2");
+  const div = document.querySelector("#div1");
   const newContent = document.createTextNode(score1);
   div.innerHTML = "";
   div.appendChild(newContent);
@@ -172,7 +180,7 @@ const createScorePOne = () =>{
 
 
 const createScorePTwo = () =>{
-  const div = document.querySelector("#div1");
+  const div = document.querySelector("#div2");
   const newContent = document.createTextNode(score2);
   div.innerHTML = "";
   div.appendChild(newContent);
