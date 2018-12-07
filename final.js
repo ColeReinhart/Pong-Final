@@ -29,10 +29,10 @@
     */
 let canvas = document.getElementById("myCanvas")
 let ctx = canvas.getContext("2d");
-let x = canvas.width / 2; //starts ball in center of screen
+let x = canvas.width / 2;
 let y = canvas.height - 200;
 let rX = canvas.height / 2;
-let positionY = 2;
+let positionY = 1;
 let positionX = 5;
 let ballSize = 10;
 let paddleWidth = 10;
@@ -51,14 +51,12 @@ let lineWidth = 2;
 let lineHeight = 400;
 let paddleC = (canvas.height - paddleHeight) / 2;
 let rPaddleC = (canvas.height - rPaddleHeight) / 2;
-ctx.canvas.setAttribute('tabindex', '0'); //click on window to activate keypress
-ctx.canvas.focus(); //auto loads tabindex, no click needed
 let score1 = 0;
 let score2 = 0;
 let interval;
 let button = document.body.querySelector("butts");
 let butt = document.getElementById("butts")
-ctx.canvas.onkeydown = function (evt) { //keybindings to move paddle while key is pressed
+ctx.canvas.onkeydown = function(evt) { //keybindings to move paddle while key is pressed
   if (event.keyCode == 87) {
     paddleUp = true;
   }
@@ -72,7 +70,7 @@ ctx.canvas.onkeydown = function (evt) { //keybindings to move paddle while key i
     rPaddleDown = true;
   }
 };
-ctx.canvas.onkeyup = function (evt) { //keybindings to stop moving paddles when key is not pressed
+ctx.canvas.onkeyup = function(evt) { //keybindings to stop moving paddles when key is not pressed
   if (event.keyCode == 87) {
     paddleUp = false;
   }
@@ -135,30 +133,10 @@ const draw = () => {
   drawPong();
   drawLine();
 
-  if (x + positionX > canvas.width - ballSize) { //right
-    positionX = -positionX;
-    score2++;
-
-    createScorePTwo();
-    if (score2 >= 10) {
-      clearInterval(interval);
-      alert("Left wins!");
-      reset();
-    }
-  };
 
 
-  if (x + positionX < ballSize) { //left
-    positionX = -positionX;
-    score1++;
-    createScorePOne();
-    if (score1 >= 10) {
-      clearInterval(interval);
-      alert("Right wins!");
-      reset();
-    }
 
-  };
+
 
 
   if (y + positionY < ballSize) { //top wall
@@ -169,21 +147,36 @@ const draw = () => {
 
   if (y + positionY > canvas.height - ballSize) { //bottom wall
     positionY = -positionY;
+  } else if (x + positionX < 25) { // left wall
+    if (400 - y < canvas.height - paddleY && 400 - y > (canvas.height - paddleY) - paddleHeight) { // positionY < rPaddleY
+      positionX = -positionX;
+    } else if (x + positionX < 0) {
+      x = canvas.width / 2;
+      y = canvas.height - 200;
+      positionX = -positionX
+      score1++;
+      createScorePOne();
+    } else if (score1 === 9) {
+      clearInterval(interval);
+      alert("Right wins!");
+      reset();
+
+    }
+  } else if (x + positionX > 775) { //right wall
+    if (400 - y < canvas.height - rPaddleY && 400 - y > (canvas.height - rPaddleY) - paddleHeight) { // positionY < rPaddleY
+      positionX = -positionX;
+    } else if (x + positionX > canvas.width ) {
+      x = canvas.width / 2;
+      y = canvas.height - 200;
+      positionX = -positionX
+      score2++;
+      createScorePTwo();
+    } else if (score2 === 9) {
+      clearInterval(interval);
+      alert("Left wins!");
+      reset();
+    }
   }
-
-  else if (x + positionX < 25) { // left wall
-    if (400-y < canvas.height - paddleY && 400-y > (canvas.height - paddleY)-paddleHeight) { // positionY < rPaddleY
-       positionX = -positionX;
-    }else if (x + positionX <  - 30)
-    alert("end game")
-}
-
-  else if (x + positionX > 775) { //right wall
-    if (400-y < canvas.height-rPaddleY && 400-y > (canvas.height -rPaddleY)-paddleHeight) { // positionY < rPaddleY
-       positionX = -positionX;
-    }else if (x + positionX > canvas.width + 30)
-    alert("end game")
-}
 
   /*if (x + positionX < ballSize) { //left wall
     positionX = -positionX;
@@ -193,12 +186,14 @@ const draw = () => {
   y += positionY;
 }
 const start = () => {
-  interval = setInterval(draw, 25);
- butt.remove();
+  interval = setInterval(draw, 10);
+  butt.remove();
+  ctx.canvas.setAttribute('tabindex', '0'); //click on window to activate keypress
+  ctx.canvas.focus(); //auto loads tabindex, no click needed
 };
 
 const reset = () => {
-document.location.reload();
+  document.location.reload();
 }
 const createScorePOne = () => {
   const div = document.querySelector("#div1");
@@ -214,6 +209,3 @@ const createScorePTwo = () => {
   div.innerHTML = "";
   div.appendChild(newContent);
 }
-
-
-
