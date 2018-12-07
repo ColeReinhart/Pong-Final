@@ -53,7 +53,8 @@ let paddleC = (canvas.height - paddleHeight) / 2;
 let rPaddleC = (canvas.height - rPaddleHeight) / 2;
 ctx.canvas.setAttribute('tabindex', '0'); //click on window to activate keypress
 ctx.canvas.focus(); //auto loads tabindex, no click needed
-
+let score1 = 0;
+let score2 = 0;
 ctx.canvas.onkeydown = function(evt) { //keybindings to move paddle while key is pressed
   if (event.keyCode == 87) {
     paddleUp = true;
@@ -129,8 +130,27 @@ const draw = () => {
   rightPaddle();
   drawPong();
   drawLine();
+  
+let child = document.getElementById("two")
+  if (x + positionX > canvas.width - ballSize){//right
+    positionX = -positionX;
+    score2++;
+    createScorePTwo();
+    if(score2 === 10){
+      alert("Left wins!")
+    };
+  } 
 
 
+
+  if(x + positionX < ballSize) { //left
+    positionX = -positionX;
+    score1++;
+    createScorePOne();
+    if(score1 === 10){
+      alert("Right wins!")
+    };
+  }
 
   if (y + positionY < ballSize) { //top wall
     positionY = -positionY;
@@ -158,7 +178,25 @@ const draw = () => {
   /*if (x + positionX < ballSize) { //left wall
     positionX = -positionX;
   }*/
+
   x += positionX;
   y += positionY;
 };
+
+
+const createScorePOne = () =>{
+  const div = document.querySelector("#div1");
+  const newContent = document.createTextNode(score1);
+  div.innerHTML = "";
+  div.appendChild(newContent);
+}
+
+
+const createScorePTwo = () =>{
+  const div = document.querySelector("#div2");
+  const newContent = document.createTextNode(score2);
+  div.innerHTML = "";
+  div.appendChild(newContent);
+}
 setInterval(draw, 25);
+
