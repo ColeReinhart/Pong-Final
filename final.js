@@ -55,7 +55,10 @@ ctx.canvas.setAttribute('tabindex', '0'); //click on window to activate keypress
 ctx.canvas.focus(); //auto loads tabindex, no click needed
 let score1 = 0;
 let score2 = 0;
-ctx.canvas.onkeydown = function(evt) { //keybindings to move paddle while key is pressed
+let interval;
+let button = document.body.querySelector("butts");
+let butt = document.getElementById("butts")
+ctx.canvas.onkeydown = function (evt) { //keybindings to move paddle while key is pressed
   if (event.keyCode == 87) {
     paddleUp = true;
   }
@@ -69,7 +72,7 @@ ctx.canvas.onkeydown = function(evt) { //keybindings to move paddle while key is
     rPaddleDown = true;
   }
 };
-ctx.canvas.onkeyup = function(evt) { //keybindings to stop moving paddles when key is not pressed
+ctx.canvas.onkeyup = function (evt) { //keybindings to stop moving paddles when key is not pressed
   if (event.keyCode == 87) {
     paddleUp = false;
   }
@@ -83,6 +86,7 @@ ctx.canvas.onkeyup = function(evt) { //keybindings to stop moving paddles when k
     rPaddleDown = false;
   }
 };
+
 const drawLine = () => {
   ctx.beginPath();
   ctx.fillRect(400, 0, lineWidth, lineHeight);
@@ -130,32 +134,38 @@ const draw = () => {
   rightPaddle();
   drawPong();
   drawLine();
-  
-let child = document.getElementById("two")
-  if (x + positionX > canvas.width - ballSize){//right
+
+  if (x + positionX > canvas.width - ballSize) { //right
     positionX = -positionX;
     score2++;
+
     createScorePTwo();
-    if(score2 === 10){
-      alert("Left wins!")
-    };
-  } 
+    if (score2 >= 10) {
+      clearInterval(interval);
+      alert("Left wins!");
+      reset();
+    }
+  };
 
 
-
-  if(x + positionX < ballSize) { //left
+  if (x + positionX < ballSize) { //left
     positionX = -positionX;
     score1++;
     createScorePOne();
-    if(score1 === 10){
-      alert("Right wins!")
-    };
-  }
+    if (score1 >= 10) {
+      clearInterval(interval);
+      alert("Right wins!");
+      reset();
+    }
+
+  };
+
 
   if (y + positionY < ballSize) { //top wall
     positionY = -positionY;
 
   }
+
 
   if (y + positionY > canvas.height - ballSize) { //bottom wall
     positionY = -positionY;
@@ -181,10 +191,16 @@ let child = document.getElementById("two")
 
   x += positionX;
   y += positionY;
+}
+const start = () => {
+  interval = setInterval(draw, 25);
+ butt.remove();
 };
 
-
-const createScorePOne = () =>{
+const reset = () => {
+document.location.reload();
+}
+const createScorePOne = () => {
   const div = document.querySelector("#div1");
   const newContent = document.createTextNode(score1);
   div.innerHTML = "";
@@ -192,11 +208,12 @@ const createScorePOne = () =>{
 }
 
 
-const createScorePTwo = () =>{
+const createScorePTwo = () => {
   const div = document.querySelector("#div2");
   const newContent = document.createTextNode(score2);
   div.innerHTML = "";
   div.appendChild(newContent);
 }
-setInterval(draw, 25);
+
+
 
