@@ -32,7 +32,7 @@ let ctx = canvas.getContext("2d");
 let x = canvas.width / 2;
 let y = canvas.height - 200;
 let rX = canvas.height / 2;
-let positionY = 1;
+let positionY = 2;
 let positionX = 5;
 let ballSize = 10;
 let paddleWidth = 10;
@@ -63,10 +63,10 @@ ctx.canvas.onkeydown = function(evt) { //keybindings to move paddle while key is
   if (event.keyCode == 83) {
     paddleDown = true;
   }
-  if (event.keyCode == 38) {
+  if (event.keyCode == 79) {
     rPaddleUp = true;
   }
-  if (event.keyCode == 40) {
+  if (event.keyCode == 76) {
     rPaddleDown = true;
   }
 };
@@ -77,10 +77,10 @@ ctx.canvas.onkeyup = function(evt) { //keybindings to stop moving paddles when k
   if (event.keyCode == 83) {
     paddleDown = false;
   }
-  if (event.keyCode == 38) {
+  if (event.keyCode == 79) {
     rPaddleUp = false;
   }
-  if (event.keyCode == 40) {
+  if (event.keyCode == 76) {
     rPaddleDown = false;
   }
 };
@@ -150,7 +150,7 @@ const draw = () => {
   } else if (x + positionX < 25) { // left wall
     if (400 - y < canvas.height - paddleY && 400 - y > (canvas.height - paddleY) - paddleHeight) { // positionY < rPaddleY
       positionX = -positionX;
-    } else if (x + positionX < 0) {
+    } else if (x + positionX < 5) {
       x = canvas.width / 2;
       y = canvas.height - 200;
       positionX = -positionX
@@ -160,12 +160,11 @@ const draw = () => {
       clearInterval(interval);
       alert("Right wins!");
       reset();
-
     }
   } else if (x + positionX > 775) { //right wall
     if (400 - y < canvas.height - rPaddleY && 400 - y > (canvas.height - rPaddleY) - paddleHeight) { // positionY < rPaddleY
       positionX = -positionX;
-    } else if (x + positionX > canvas.width ) {
+    } else if (x + positionX > canvas.width - 5) {
       x = canvas.width / 2;
       y = canvas.height - 200;
       positionX = -positionX
