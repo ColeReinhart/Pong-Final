@@ -1,7 +1,11 @@
 
 * { padding: 0; margin: 0; }
-canvas { background: rgb(0, 0, 0); display: block; margin: 0 auto; margin-top: 101px; margin-bottom: 101px;}
+canvas { background: rgb(0, 0, 0); display: block; margin: 0 auto; margin-top: 20px; margin-bottom: 101px;}
 
+
+html{
+    background-color: #353535;
+}
 #div1{
     position: absolute;
     color: yellow; font-size: 40px;
@@ -18,15 +22,53 @@ left: 43%;
 top: 45%;
 }
 
-h1{
-    background-color:black;
-    color: white;
-    padding:5%;
-    text-align: center;
+#butts{
+  background-color: green;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
 }
 
-button{
-    margin-left:50%;
-    width: 70px;
-    height: 30px;
+#balls{
+  background-color: darkred;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+}
+
+#buttons{
+  margin-top: 20px;
+  text-align: center;
+}
+
+#top {
+  background-color: black;
+  padding: 5%;
+}
+
+h1{
+  text-align: center;
+  color: #CDCCCC;
+  font-size: 40px;
+}
+
+h2 {
+  color: #CDCCCC;
+  font-size: 20px;
+  background-color: #353535;
+  margin-right: 80%;
+}
+
+p{
+  color: #CDCCCC;
+  margin-right: 80%;
+  font-size: 15px;
+  padding: 5px;
+  background-color: #353535;
 }
